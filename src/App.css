@@ -84,6 +84,13 @@
     color: var(--text-primary);
 }
 
+.project-name {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-left: 8px;
+}
+
 .search-bar {
     display: flex;
     align-items: center;

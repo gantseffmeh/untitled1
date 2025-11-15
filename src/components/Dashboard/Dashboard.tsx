@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useProject } from '../../contexts/ProjectContext';
 import { useCurrentTime, useClickOutside } from '../../hooks';
 import { navigationItems } from '../../utils/navigation';
 import { NavItem as NavItemType } from '../../types';
@@ -39,6 +40,7 @@ const Dashboard: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { theme, toggleTheme } = useTheme();
+    const { selectedProject, setSelectedProject } = useProject();
     const currentTime = useCurrentTime();
     const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
     const [notificationsOpen, setNotificationsOpen] = useState<boolean>(false);
@@ -70,6 +72,8 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         if (location.pathname.includes('/statistics')) {
             setActiveNavItem('statistics');
+        } else if (location.pathname.includes('/marketing')) {
+            setActiveNavItem('marketing');
         } else {
             setActiveNavItem('');
         }
@@ -103,9 +107,15 @@ const Dashboard: React.FC = () => {
 
     const handleLogout = useCallback(() => {
         console.log('Выход из системы');
+        setSelectedProject(null);
         setUserMenuOpen(false);
         // TODO: Реализовать очистку токенов/сессии
         navigate('/login');
+    }, [navigate, setSelectedProject]);
+
+    const handleChangeProject = useCallback(() => {
+        setUserMenuOpen(false);
+        navigate('/project-selection');
     }, [navigate]);
 
     const handleProfile = useCallback(() => {
@@ -122,6 +132,8 @@ const Dashboard: React.FC = () => {
         // Навигация по разделам
         if (itemId === 'statistics') {
             navigate('/dashboard/statistics');
+        } else if (itemId === 'marketing') {
+            navigate('/dashboard/marketing');
         } else {
             navigate('/dashboard');
         }
@@ -143,6 +155,11 @@ const Dashboard: React.FC = () => {
                         </div>
                     </button>
                     <h1 className="title">Planica</h1>
+                    {selectedProject && (
+                        <span className="project-name" title={selectedProject.description}>
+                            / {selectedProject.name}
+                        </span>
+                    )}
                 </div>
 
                 <div className="search-bar">
@@ -242,6 +259,11 @@ const Dashboard: React.FC = () => {
                                     <button className="user-menu-item">
                                         <span className="user-menu-icon">⚙️</span>
                                         Настройки аккаунта
+                                    </button>
+                                    <div className="user-menu-divider"></div>
+                                    <button className="user-menu-item" onClick={handleChangeProject}>
+                                        <span className="user-menu-icon">🔄</span>
+                                        Сменить проект
                                     </button>
                                     <div className="user-menu-divider"></div>
                                     <button className="user-menu-item logout" onClick={handleLogout}>

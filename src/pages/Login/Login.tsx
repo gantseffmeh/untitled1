@@ -12,8 +12,8 @@ const Login: React.FC = () => {
         e.preventDefault();
         console.log('Вход:', { login, password, rememberMe });
         // TODO: Реализовать логику входа с проверкой credentials
-        // Пока просто редиректим на dashboard
-        navigate('/dashboard');
+        // После успешного входа редиректим на выбор проекта
+        navigate('/project-selection');
     };
 
     return (
@@ -81,15 +81,15 @@ const Login: React.FC = () => {
                     <div className="social-login-header">
                         <span className="social-login-text">Войти с помощью</span>
                     </div>
-                    <button 
-                        className="yandex-id-button" 
-                        onClick={() => {
-                            console.log('Вход через Яндекс ID');
-                            // TODO: Реализовать OAuth авторизацию через Яндекс ID
-                            navigate('/dashboard');
-                        }}
-                        aria-label="Войти через Яндекс ID"
-                    >
+                            <button
+                                className="yandex-id-button"
+                                onClick={() => {
+                                    console.log('Вход через Яндекс ID');
+                                    // TODO: Реализовать OAuth авторизацию через Яндекс ID
+                                    navigate('/project-selection');
+                                }}
+                                aria-label="Войти через Яндекс ID"
+                            >
                         <span className="yandex-icon">Я</span>
                         <span className="yandex-text">ID</span>
                     </button>

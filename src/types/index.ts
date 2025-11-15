@@ -33,3 +33,6 @@ export interface SearchResult {
     title: string;
     description?: string;
 }
+
+// Экспорт типов для маркетинга
+export * from './marketing';
