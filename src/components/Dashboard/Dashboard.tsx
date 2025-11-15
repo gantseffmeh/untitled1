@@ -70,6 +70,8 @@ const Dashboard: React.FC = () => {
     useEffect(() => {
         if (location.pathname.includes('/statistics')) {
             setActiveNavItem('statistics');
+        } else if (location.pathname.includes('/marketing')) {
+            setActiveNavItem('marketing');
         } else {
             setActiveNavItem('');
         }
@@ -122,6 +124,8 @@ const Dashboard: React.FC = () => {
         // Навигация по разделам
         if (itemId === 'statistics') {
             navigate('/dashboard/statistics');
+        } else if (itemId === 'marketing') {
+            navigate('/dashboard/marketing');
         } else {
             navigate('/dashboard');
         }
